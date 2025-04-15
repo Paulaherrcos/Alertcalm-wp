@@ -1,0 +1,155 @@
+/*
+Theme Name: AlertCalm
+Theme URI: https://tusitio.com
+Author: Paula
+Author URI: https://tusitio.com
+Description: Tema personalizado para AlertCalm
+Version: 1.0.0
+Text Domain: alertcalm
+*/
+
+/* COLORES PRINCIPALES */
+:root {
+    --color-primario: #CE93C8; 
+    --color-secundario: #E1BEE7; 
+    --color-negro:#202020;
+    --color-gris-texto:#526354;
+    --color-blanco-fondo:#F3FAF6;
+  }
+
+  /* fuente */
+  body {
+    font-family: var(--e-global-typography-primary-font-family), Sans-serif;
+}
+
+/* head mover menu derecha*/
+.main-navigation a{
+    color: var(--color-negro);
+    text-decoration: none;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+#primary-menu ul{
+   display: flex; 
+}
+
+#site-navigation {
+    display: flex;
+}
+
+#primary-menu, #primary-menu li{
+    list-style-type: none;
+    display: flex; 
+    justify-content: left;
+}
+
+#site-navigation a:hover{
+    color: var(--color-primario);
+    
+}
+
+.horizontal-menu{
+    display: flex;
+}
+/* logo */
+
+.site-branding {
+    display: flex;
+    align-items: center;  
+    width:15%;
+}
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Alinear verticalmente el contenido (logo y menú) */
+    padding: 10px;
+}
+
+#logo{
+    width: 60%;
+}
+
+.menu-button{
+    background-color: #ce93d8;
+    border-radius: 10px;
+    padding: 10px;
+    border: none;
+    color: rgb(0, 0, 0);
+    margin-left: 40px;
+    margin-top: 4px;
+    padding: 15px;
+}
+
+.menu-button a{
+    font-weight: bold;
+    color: rgb(0, 0, 0)!important;
+}
+
+
+
+.menu-button:hover{
+    background-color: #ba68c8;
+    color: rgb(255, 255, 255);
+    
+    color: rgb(255, 255, 255);
+}
+
+
+.mi-titulo {
+    color: var(--color-primario);
+  }
+  
+  .mi-boton {
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+
+  /* h1 */
+
+  .elementor-10 .elementor-element.elementor-element-eb1a82a .elementor-heading-title, .elementor-17 .elementor-element.elementor-element-c6db31b .elementor-heading-title {
+    color: var(--color-blanco-fondo) !important;
+    font-size: 55px !important;
+}
+
+/* h2 */
+
+h2{
+    font-size: 30px !important;
+}
+
+/* boton */
+
+.elementor-element.elementor-element-f7e3ba7 .elementor-button, .elementor-element.elementor-element-7735457, .elementor-button{
+    font-size: 17px !important;
+}
+
+p{
+    font-size: 17px !important;
+}
+li{
+    font-size: 17px !important;
+}
+
+/* footer */
+
+#footer-menu ul, ul{
+    gap:30px;
+    list-style: none;
+}
+a, ul{
+    
+    text-decoration: none;
+}
+
+h3{text-align: center;}
+.site-footer{
+    display: flex;
+}
