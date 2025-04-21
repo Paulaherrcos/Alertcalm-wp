@@ -6,6 +6,9 @@
  * Author: Paula Herrera
  */
 
+// tengo que modificar esto
+
+
 function crear_tabla_musica_y_meditaciones() {
     global $wpdb;
     $tabla_musica = $wpdb->prefix . 'musica';
@@ -77,7 +80,6 @@ function listar_musicas_con_filtro( $categorias = '' ) {
         // Prepara placeholders para la consulta
         $placeholders = implode(',', array_fill(0, count($categorias_array), '%s'));
 
-        // Añade la condición WHERE con IN para múltiples categorías
         $sql .= $wpdb->prepare( " WHERE categoria IN ($placeholders)", ...$categorias_array );
     }
 

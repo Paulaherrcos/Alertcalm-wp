@@ -111,6 +111,28 @@ Text Domain: alertcalm
     cursor: pointer;
   }
 
+/* botonoes login y registrar, cerrar sesion */
+
+.boton-login:hover, .boton-registro:hover,#btn_cerrarsesion:hover {
+    background-color: var(--color-primario); /* Color al pasar el ratón */
+}
+
+.boton-registro, #btn_cerrarsesion, .boton-login  {
+    border-radius: 25px; 
+    text-align: center;
+    border: 2px solid var(--color-negro);
+    margin-right: 10px; 
+}
+
+
+.boton-login a:hover, .boton-registro a:hover, #btn_cerrarsesion:hover{
+    color: white !important; 
+}
+
+.boton-registro:hover, .boton-login:hover, #btn_cerrarsesion:hover {
+    border: 1px solid var(--color-primario) !important;
+}
+
 
   /* h1 */
 
@@ -208,3 +230,89 @@ h3{text-align: center;}
 .meditacion-card .btn-escuchar:hover {
     background-color: #7b1fa2;
 }
+
+/* formulario login-register */
+.alertcalm-form {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 16px;
+    background-color: #F3E5F5; /* Morado claro */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.alertcalm-form input {
+    width: 93%;
+    padding: 12px;
+    margin-bottom: 1rem;
+    border: 1px solid #D1C4E9;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.alertcalm-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.alertcalm-form button:hover {
+    background-color: var(--color-secundario);
+}
+
+.alertcalm-mensaje {
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+.alertcalm-mensaje.success {
+    background-color: #C8E6C9; /* Verde claro */
+    color: #2E7D32;
+}
+
+.alertcalm-mensaje.error {
+    background-color: #FFCDD2;
+    color: #C62828;
+}
+
+
+/* politica privacidad */
+
+.alertcalm-checkbox {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alertcalm-checkbox input {
+    /* tamaño fijo */
+    flex: 0 0 auto; 
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+.politica-texto {
+    /* flex:1 ocupa todo el hueco libre que quede */
+    flex: 1; 
+    display: inline;
+}
+
+.alertcalm-checkbox a {
+    color: #7B1FA2;
+    text-decoration: underline;
+}
+
+

@@ -19,7 +19,8 @@
 			</ul>
 		</div>
 		<div>
-			<p>© 2025 AlertCalm - Todos los derechos reservados.</p>
+			<!-- echo date('Y'); muestra año automaticamente -->
+			<p>© <?php echo date('Y'); ?> AlertCalm - Todos los derechos reservados.</p>
 		</div>
 	
 </footer>
