@@ -12,7 +12,6 @@
 function crear_tabla_musica_y_meditaciones() {
     global $wpdb;
     $tabla_musica = $wpdb->prefix . 'musica';
-    // Definir la estructura de la tabla
     $sql_musica = "CREATE TABLE $tabla_musica (
         id INT NOT NULL AUTO_INCREMENT,
         titulo VARCHAR(255),
@@ -35,11 +34,26 @@ function crear_tabla_musica_y_meditaciones() {
         imagen_url VARCHAR(255),
         PRIMARY KEY (id)
     )";
+
+  // Tabla de favoritos
+  
+  $tabla_favoritos = $wpdb->prefix . 'favoritos';
+  $sql_favoritos = "CREATE TABLE $tabla_favoritos (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id BIGINT UNSIGNED NOT NULL,
+    tipo ENUM('musica', 'meditacion') NOT NULL,
+    item_id INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES {$wpdb->prefix}users(ID) ON DELETE CASCADE
+)";
+
+
     // Incluir el archivo necesario para ejecutar dbDelta()
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     // Crear o modificar la tabla en la base de datos
     dbDelta( $sql_musica );
     dbDelta( $sql_meditaciones);
+    dbDelta( $sql_favoritos);
 }
 // Agregar la acción para crear la tabla de musica al activar el plugin
 register_activation_hook( __FILE__, 'crear_tabla_musica_y_meditaciones' );
@@ -72,7 +86,7 @@ function listar_musicas_con_filtro( $categorias = '' ) {
     // Comienza la consulta SQL
     $sql = "SELECT * FROM $tabla_musica";
 
-    // Si se pasa una categoría (o categorías), se filtra por ellas
+    // Si se pasa una categoría, se filtra por ellas
     if ( ! empty( $categorias ) ) {
         // Divide las categorías en un array
         $categorias_array = array_map('trim', explode(',', $categorias));
@@ -111,9 +125,7 @@ function crear_musica( $request ) {
         'lenguaje' => $request->get_param( 'lenguaje' ),
         'imagen_url' => $request->get_param( 'imagen_url' ),
     );
-    // Insertar la música en la base de datos
     $wpdb->insert( $tabla_musica, $musica );
-    // Devolver el ID de la nueva música
     return $wpdb->insert_id;
 }
 
@@ -129,9 +141,7 @@ function crear_meditacion( $request ) {
         'lenguaje' => $request->get_param( 'lenguaje' ),
         'imagen_url' => $request->get_param( 'imagen_url' ),
     );
-    // Insertar la meditacion en la base de datos
     $wpdb->insert( $tabla_meditaciones, $meditacion );
-    // Devolver el ID de la nueva meditacion
     return $wpdb->insert_id;
 }
 
@@ -148,9 +158,7 @@ function actualizar_musica( $request ) {
         'lenguaje' => $request->get_param( 'lenguaje' ),
         'imagen_url' => $request->get_param( 'imagen_url' ),
     );
-    // Actualizar la música en la base de datos
     $wpdb->update( $tabla_musica, $musica, array( 'id' => $id ) );
-    // Devolver la cantidad de filas afectadas
     return $wpdb->rows_affected;
 }
 
@@ -296,14 +304,35 @@ function shortcode_listar_musicas( $atts ) {
                 <p><strong>Duración:</strong> {$musica->duracion}</p>
                 <p><strong>Lenguaje:</strong> {$musica->lenguaje}</p>
                 <a href='{$musica->file_url}' target='_blank' class='btn-escuchar'>Escuchar</a>
+                <button class='btn-favorito' data-elemento-id='{$musica->id}' data-tipo='musica'>
+                    <i class='fas fa-heart'></i>
+                </button>
             </div>
         ";
     }
     
     $html .= '</div>';
+    
+    // Agregar JavaScript para manejar el clic en el corazón
+    $html .= "
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const favoritos = document.querySelectorAll('.btn-favorito');
+                
+                favoritos.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        // Alternar la clase 'favorito' para cambiar el color
+                        btn.classList.toggle('favorito');
+                    });
+                });
+            });
+        </script>
+    ";
+
     return $html;
 }
 add_shortcode('listar_musicas', 'shortcode_listar_musicas');
+
 
 // Shortcode para mostrar las meditaciones
 function shortcode_listar_meditaciones( $atts ) {
@@ -337,3 +366,87 @@ function shortcode_listar_meditaciones( $atts ) {
 }
 add_shortcode('listar_meditaciones', 'shortcode_listar_meditaciones');
 
+
+
+
+// FUNCIONALIDAD PARA AGREGAR FAVORITO SI ESTOY INICIADO SESIÓN SINO QUE SALTE MENSAJE
+function agregar_favorito( $request ) {
+    if ( ! is_user_logged_in() ) {
+        return new WP_REST_Response( 'Debes iniciar sesión para agregar a favoritos.', 401 );
+    }
+
+    global $wpdb;
+    $tabla_favoritos = $wpdb->prefix . 'favoritos';
+    $user_id = get_current_user_id();
+    $tipo = $request->get_param( 'tipo' ); // 'musica' o 'meditacion'
+    $item_id = $request->get_param( 'item_id' ); // ID de la música o meditación
+
+    // Verificar si ya está en favoritos
+    $favorito_existente = $wpdb->get_var( $wpdb->prepare(
+        "SELECT COUNT(*) FROM $tabla_favoritos WHERE user_id = %d AND tipo = %s AND item_id = %d",
+        $user_id, $tipo, $item_id
+    ));
+
+    if ( $favorito_existente > 0 ) {
+        // Si ya está en favoritos, eliminarlo
+        $wpdb->delete( $tabla_favoritos, array(
+            'user_id' => $user_id,
+            'tipo' => $tipo,
+            'item_id' => $item_id
+        ));
+        return new WP_REST_Response( ['message' => 'Elemento eliminado de favoritos correctamente.'], 200 );
+    }
+
+    // Si no está en favoritos, agregarlo
+    $wpdb->insert( $tabla_favoritos, array(
+        'user_id' => $user_id,
+        'tipo' => $tipo,
+        'item_id' => $item_id
+    ));
+
+    // Responder con éxito
+    return new WP_REST_Response( ['message' => 'Elemento agregado a favoritos correctamente.'], 200 );
+}
+
+// Registrar el endpoint para agregar a favoritos
+
+add_action( 'rest_api_init', 'registrar_endpoint_favorito' );
+function registrar_endpoint_favorito() {
+    register_rest_route( 'musica_meditaciones/v1', '/favorito', array(
+        'methods' => 'POST',
+        'callback' => 'agregar_favorito',
+        'permission_callback' => '__return_true', // Asegurarse de que cualquier usuario logueado pueda agregar
+    ) );
+}
+
+// cargar el js
+add_action('wp_enqueue_scripts', function() {
+    wp_enqueue_script('favoritos-js', plugin_dir_url(__FILE__) . 'js/favoritos.js', [], null, true);
+    wp_localize_script('favoritos-js', 'wpApiSettings', [
+        'nonce' => wp_create_nonce('wp_rest')
+    ]);
+});
+
+// para que se cargen todos los favoritos una vez hemos iniciados eison
+
+add_action('rest_api_init', function() {
+    register_rest_route('musica_meditaciones/v1', '/favoritos_usuario', [
+        'methods' => 'GET',
+        'callback' => 'obtener_favoritos_usuario',
+        'permission_callback' => function() {
+            return is_user_logged_in();
+        }
+    ]);
+});
+
+function obtener_favoritos_usuario() {
+    global $wpdb;
+    $tabla = $wpdb->prefix . 'favoritos';
+    $user_id = get_current_user_id();
+
+    $resultados = $wpdb->get_results($wpdb->prepare(
+        "SELECT tipo, item_id FROM $tabla WHERE user_id = %d", $user_id
+    ), ARRAY_A);
+
+    return new WP_REST_Response($resultados, 200);
+}

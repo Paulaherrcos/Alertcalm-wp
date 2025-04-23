@@ -15,6 +15,7 @@ Text Domain: alertcalm
     --color-negro:#202020;
     --color-gris-texto:#526354;
     --color-blanco-fondo:#F3FAF6;
+    --color-rojo:rgb(231, 80, 130);
   }
 
   /* fuente */
@@ -285,6 +286,20 @@ h3{text-align: center;}
     color: #C62828;
 }
 
+/* corazon agregar favoritos */
+.btn-favorito i {
+    color: white;
+    transition: color 0.3s ease;
+    font-size: 20px;
+}
+
+.btn-favorito.favorito i {
+    color: var(--color-rojo); /* Morado intenso */
+}
+
+.btn-favorito{
+    border: none;
+}
 
 /* politica privacidad */
 
