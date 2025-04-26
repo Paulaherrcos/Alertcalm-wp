@@ -25,8 +25,8 @@ define( 'DB_NAME', 'alertcalm_wp' );
 /** Database username */
 define( 'DB_USER', 'root' );
 
-/** Database password */
-define( 'DB_PASSWORD', 'root' );
+/** Database password en mi ordena de mesa poner la pass root*/
+define( 'DB_PASSWORD', '' );
 
 /** Database hostname */
 define( 'DB_HOST', 'localhost' );

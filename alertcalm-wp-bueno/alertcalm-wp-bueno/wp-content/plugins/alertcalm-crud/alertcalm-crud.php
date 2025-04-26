@@ -415,7 +415,9 @@ function registrar_endpoint_favorito() {
     register_rest_route( 'musica_meditaciones/v1', '/favorito', array(
         'methods' => 'POST',
         'callback' => 'agregar_favorito',
-        'permission_callback' => '__return_true', // Asegurarse de que cualquier usuario logueado pueda agregar
+        'permission_callback' => function() {
+            return is_user_logged_in();//si el usuario esta logueado
+        },
     ) );
 }
 
@@ -427,7 +429,8 @@ add_action('wp_enqueue_scripts', function() {
     ]);
 });
 
-// para que se cargen todos los favoritos una vez hemos iniciados eison
+// para que se cargen todos los favoritos una vez hemos iniciados eison.
+//al poner 'permission_callback' solo funcionará el agregar favorito cuadno según los privilegios del rol
 
 add_action('rest_api_init', function() {
     register_rest_route('musica_meditaciones/v1', '/favoritos_usuario', [

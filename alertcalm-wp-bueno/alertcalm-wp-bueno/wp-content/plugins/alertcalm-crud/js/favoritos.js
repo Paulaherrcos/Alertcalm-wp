@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
     const botones = document.querySelectorAll('.btn-favorito');
 
-    // Cargar favoritos del usuario
+    // Cargar favoritos del usuario uso wpApiSettings.root porque si lo pongo como ruta relativa no funciona
     fetch(`${wpApiSettings.root}musica_meditaciones/v1/favoritos_usuario`, {
         headers: {
             'X-WP-Nonce': wpApiSettings.nonce
-        }
+        },
+        credentials: 'same-origin' //ncesario para que se guarden las cookies del user registrado y el navegador sepa quien es
     })
     .then(res => res.json())
     .then(favoritos => {
@@ -31,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         'Content-Type': 'application/json',
                         'X-WP-Nonce': wpApiSettings.nonce
                     },
+                    credentials: 'same-origin', 
                     body: JSON.stringify({ item_id: itemId, tipo: tipo })
                 })
                 .then(r => r.json())
