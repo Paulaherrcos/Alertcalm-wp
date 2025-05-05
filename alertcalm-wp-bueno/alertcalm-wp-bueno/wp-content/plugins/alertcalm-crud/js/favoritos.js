@@ -1,12 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Verifica si el usuario está logueado al cargar la página
+    if (wpApiSettings.userLoggedIn === 'false') {
+        // Bloqueamos la interactividad con los botones de favoritos
+        const botones = document.querySelectorAll('.btn-favorito');
+        botones.forEach(boton => {
+            boton.disabled = true; // Deshabilita el botón
+        });
+        return; // Detenemos la ejecución del código si no está logueado
+    }
+
+    // Si el usuario está logueado, continúa con la lógica de los botones de favoritos
     const botones = document.querySelectorAll('.btn-favorito');
 
-    // Cargar favoritos del usuario uso wpApiSettings.root porque si lo pongo como ruta relativa no funciona
     fetch(`${wpApiSettings.root}musica_meditaciones/v1/favoritos_usuario`, {
+        method: 'GET',
         headers: {
             'X-WP-Nonce': wpApiSettings.nonce
         },
-        credentials: 'same-origin' //ncesario para que se guarden las cookies del user registrado y el navegador sepa quien es
+        credentials: 'same-origin'
     })
     .then(res => res.json())
     .then(favoritos => {
@@ -24,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 icono.style.color = '';
             }
 
-            // Click para toggle favorito
             boton.addEventListener('click', function () {
                 fetch(`${wpApiSettings.root}musica_meditaciones/v1/favorito`, {
                     method: 'POST',
@@ -32,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         'Content-Type': 'application/json',
                         'X-WP-Nonce': wpApiSettings.nonce
                     },
-                    credentials: 'same-origin', 
+                    credentials: 'same-origin',
                     body: JSON.stringify({ item_id: itemId, tipo: tipo })
                 })
                 .then(r => r.json())
@@ -47,5 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
         });
-    });
+    })
+    .catch(err => console.error('Error al obtener favoritos:', err));
 });

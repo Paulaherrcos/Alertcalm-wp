@@ -6,8 +6,6 @@
  * Author: Paula Herrera
  */
 
-// tengo que modificar esto
-
 
 function crear_tabla_musica_y_meditaciones() {
     global $wpdb;
@@ -48,9 +46,8 @@ function crear_tabla_musica_y_meditaciones() {
 )";
 
 
-    // Incluir el archivo necesario para ejecutar dbDelta()
+    // Incluye el archivo necesario para ejecutar dbDelta()
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-    // Crear o modificar la tabla en la base de datos
     dbDelta( $sql_musica );
     dbDelta( $sql_meditaciones);
     dbDelta( $sql_favoritos);
@@ -68,12 +65,10 @@ function obtener_musica( $request ) {
     return $musica;
 }
 
-// Función para obtener una meditación por ID
 function obtener_meditacion( $request ) {
     global $wpdb;
     $tabla_meditaciones = $wpdb->prefix . 'meditaciones';
     $id = $request['id'];
-    // Obtener la meditacion de la base de datos
     $meditacion = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $tabla_meditaciones WHERE id = %d", $id ) );
     return $meditacion;
 }
@@ -83,7 +78,6 @@ function listar_musicas_con_filtro( $categorias = '' ) {
     global $wpdb;
     $tabla_musica = $wpdb->prefix . 'musica';
 
-    // Comienza la consulta SQL
     $sql = "SELECT * FROM $tabla_musica";
 
     // Si se pasa una categoría, se filtra por ellas
@@ -97,7 +91,7 @@ function listar_musicas_con_filtro( $categorias = '' ) {
         $sql .= $wpdb->prepare( " WHERE categoria IN ($placeholders)", ...$categorias_array );
     }
 
-    // Ejecuta la consulta y devuelve los resultados
+    // Ejecuta la consulta y devuelve 
     return $wpdb->get_results( $sql );
 }
 
@@ -175,9 +169,7 @@ function actualizar_meditacion( $request ) {
         'lenguaje' => $request->get_param( 'lenguaje' ),
         'imagen_url' => $request->get_param( 'imagen_url' ),
     );
-    // Actualizar la meditación en la base de datos
     $wpdb->update( $tabla_meditaciones, $meditacion, array( 'id' => $id ) );
-    // Devolver la cantidad de filas afectadas
     return $wpdb->rows_affected;
 }
 
@@ -186,9 +178,7 @@ function eliminar_musica( $request ) {
     global $wpdb;
     $tabla_musica = $wpdb->prefix . 'musica';
     $id = $request['id'];
-    // Eliminar la música de la base de datos
     $wpdb->delete( $tabla_musica, array( 'id' => $id ) );
-    // Devolver la cantidad de filas afectadas
     return $wpdb->rows_affected;
 }
 
@@ -197,9 +187,7 @@ function eliminar_meditacion( $request ) {
     global $wpdb;
     $tabla_meditaciones = $wpdb->prefix . 'meditaciones';
     $id = $request['id'];
-    // Eliminar la meditación de la base de datos
     $wpdb->delete( $tabla_meditaciones, array( 'id' => $id ) );
-    // Devolver la cantidad de filas afectadas
     return $wpdb->rows_affected;
 }
 
@@ -281,7 +269,7 @@ add_action( 'rest_api_init', 'registrar_endpoint_rest_musica_y_meditaciones' );
 // Shortcode para mostrar las músicas
 function shortcode_listar_musicas( $atts ) {
     $atts = shortcode_atts( array(
-        'categoria' => '',  // Por defecto no se filtra por categoría
+        'categoria' => '',  
     ), $atts, 'listar_musicas' );
     
     // Verificar si se pasa el parámetro categoria
@@ -293,7 +281,7 @@ function shortcode_listar_musicas( $atts ) {
     if (empty($musicas)) return '<p>No hay músicas disponibles.</p>';
 
     // Iniciar el HTML para las tarjetas
-    $html = '<h3>Lista de Músicas</h3><div class="musica-cards-container">';
+    $html = '<h3>Lista de Música</h3><div class="musica-cards-container">';
 
     foreach ($musicas as $musica) {
         $html .= "
@@ -313,7 +301,7 @@ function shortcode_listar_musicas( $atts ) {
     
     $html .= '</div>';
     
-    // Agregar JavaScript para manejar el clic en el corazón
+    // Agregado el JavaScript para manejar el clic en el corazón
     $html .= "
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -344,8 +332,7 @@ function shortcode_listar_meditaciones( $atts ) {
     $meditaciones = listar_meditaciones_con_filtro( $atts['categoria'] );
 
     if (empty($meditaciones)) return '<p>No hay meditaciones disponibles.</p>';
-
-    // Iniciar el HTML para las tarjetas
+    //html para tarjetas
     $html = '<h3>Lista de Meditaciones</h3><div class="meditacion-cards-container">';
 
     foreach ($meditaciones as $meditacion) {
@@ -357,6 +344,9 @@ function shortcode_listar_meditaciones( $atts ) {
                 <p><strong>Duración:</strong> {$meditacion->duracion}</p>
                 <p><strong>Lenguaje:</strong> {$meditacion->lenguaje}</p>
                 <a href='{$meditacion->file_url}' target='_blank' class='btn-escuchar'>Escuchar</a>
+                <button class='btn-favorito' data-elemento-id='{$musica->id}' data-tipo='musica'>
+                    <i class='fas fa-heart'></i>
+                </button>
             </div>
         ";
     }
@@ -421,13 +411,17 @@ function registrar_endpoint_favorito() {
     ) );
 }
 
-// cargar el js
 add_action('wp_enqueue_scripts', function() {
     wp_enqueue_script('favoritos-js', plugin_dir_url(__FILE__) . 'js/favoritos.js', [], null, true);
+
+    // Localizar el script y agregar la URL de la API REST, el nonce y la información de sesión
     wp_localize_script('favoritos-js', 'wpApiSettings', [
-        'nonce' => wp_create_nonce('wp_rest')
+        'root'   => esc_url_raw(rest_url()), // URL base de la API REST
+        'nonce'  => wp_create_nonce('wp_rest'), // Nonce para la seguridad
+        'userLoggedIn' => is_user_logged_in() ? 'true' : 'false' // Convertir a cadena
     ]);
 });
+
 
 // para que se cargen todos los favoritos una vez hemos iniciados eison.
 //al poner 'permission_callback' solo funcionará el agregar favorito cuadno según los privilegios del rol

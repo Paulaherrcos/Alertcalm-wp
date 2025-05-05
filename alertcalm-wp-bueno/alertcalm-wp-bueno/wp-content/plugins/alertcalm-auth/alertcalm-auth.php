@@ -34,7 +34,8 @@ function alertcalm_registrar_usuario()
             $user_id = wp_create_user($nombre_usuario, $contrasena, $email);
 
             if (!is_wp_error($user_id)) {
-                wp_update_user(array('ID' => $user_id, 'role' => 'regular'));
+                //que lo cree como usuario-alertcalm por defecto con sus privilegios
+                wp_update_user(array('ID' => $user_id, 'role' => 'usuario-alertcalm'));
                 $mensaje = '<p class="alertcalm-mensaje success">Usuario registrado con éxito.</p>';
             } else {
                 $mensaje = '<p class="alertcalm-mensaje error">Error al registrar usuario.</p>';
@@ -87,6 +88,43 @@ function alertcalm_iniciar_sesion()
             'remember' => true
         );
 
+        // Intentar iniciar sesión con las credenciales
+        $usuario = wp_signon($credenciales, false);
+        
+        if (!is_wp_error($usuario)) {
+            // Forzamos la actualización de la sesión del usuario
+            wp_set_current_user($usuario->ID);
+            wp_set_auth_cookie($usuario->ID);
+
+            // Redirigir al usuario a la página principal después de un login exitoso
+            wp_redirect(home_url());
+            exit;
+        } else {
+            $mensaje = '<p class="alertcalm-mensaje error">Error en el nombre de usuario o la contraseña.</p>';
+        }
+    }
+
+    return $mensaje;
+}
+
+
+
+// recuperar un usuario
+function alertcalm_recuperar_usuario()
+{
+    global $usuario;
+    $mensaje = '';
+
+    if (isset($_POST['alertcalm_login_nonce']) && wp_verify_nonce($_POST['alertcalm_login_nonce'], 'alertcalm_login_nonce_accion')) {
+        $nombre_usuario = sanitize_text_field($_POST['nombre_usuario']);
+        $contrasena = $_POST['contrasena'];
+
+        $credenciales = array(
+            'user_login' => $nombre_usuario,
+            'user_password' => $contrasena,
+            'remember' => true
+        );
+
         $usuario = wp_signon($credenciales, false);
         if (!is_wp_error($usuario)) {
             error_log('Usuario autenticado correctamente');
@@ -98,7 +136,7 @@ function alertcalm_iniciar_sesion()
         }
     }
 
-    return $mensaje;
+    return $usuario;
 }
 
 function alertcalm_formulario_login()

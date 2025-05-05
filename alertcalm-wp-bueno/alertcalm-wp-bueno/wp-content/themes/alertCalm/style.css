@@ -9,6 +9,8 @@ Text Domain: alertcalm
 */
 
 /* COLORES PRINCIPALES */
+
+
 :root {
     --color-primario: #CE93C8; 
     --color-secundario: #E1BEE7; 
@@ -16,11 +18,16 @@ Text Domain: alertcalm
     --color-gris-texto:#526354;
     --color-blanco-fondo:#F3FAF6;
     --color-rojo:rgb(231, 80, 130);
+    --color-verde:#F3FAF6;
   }
 
   /* fuente */
   body {
     font-family: var(--e-global-typography-primary-font-family), Sans-serif;
+}
+
+*{
+    margin: 0px;
 }
 
 /* head mover menu derecha*/
@@ -66,7 +73,7 @@ Text Domain: alertcalm
     display: flex;
     justify-content: space-between;
     align-items: center; /* Alinear verticalmente el contenido (logo y menú) */
-    padding: 10px;
+    padding: 20px;
 }
 
 #logo{
@@ -114,8 +121,8 @@ Text Domain: alertcalm
 
 /* botonoes login y registrar, cerrar sesion */
 
-.boton-login:hover, .boton-registro:hover,#btn_cerrarsesion:hover {
-    background-color: var(--color-primario); /* Color al pasar el ratón */
+.boton-login:hover, .boton-registro:hover,#btn_cerrarsesion:hover{
+    background-color: var(--color-primario);
 }
 
 .boton-registro, #btn_cerrarsesion, .boton-login  {
@@ -131,13 +138,13 @@ Text Domain: alertcalm
 }
 
 .boton-registro:hover, .boton-login:hover, #btn_cerrarsesion:hover {
-    border: 1px solid var(--color-primario) !important;
+    border: 2px solid var(--color-primario) !important;
 }
 
 
   /* h1 */
 
-  .elementor-10 .elementor-element.elementor-element-eb1a82a .elementor-heading-title, .elementor-17 .elementor-element.elementor-element-c6db31b .elementor-heading-title, .elementor-20 .elementor-element.elementor-element-2e5db9b .elementor-heading-title {
+  .elementor-10 .elementor-element.elementor-element-eb1a82a .elementor-heading-title, .elementor-17 .elementor-element.elementor-element-c6db31b .elementor-heading-title, .elementor-20 .elementor-element.elementor-element-2e5db9b .elementor-heading-title{
     color: var(--color-blanco-fondo) !important;
     font-size: 55px !important;
 }
@@ -171,6 +178,16 @@ li{
 .paginas-interes, .menu-footer{
     text-align: center;
     width: 100%;
+    margin-top: 70px;
+    color: var(--color-gris-texto);
+}
+
+.menu-footer h3, .paginas-interes h3{
+    margin-bottom: 20px;
+}
+
+h3{
+    margin-bottom: 30px;
 }
 
 .footer-display{
@@ -179,17 +196,33 @@ li{
 .derechos-reserv{
     width: 100%;
     text-align: center;
+    margin-top: 30px;
+    margin-bottom: 35px;
 }
 a, ul{
     
     text-decoration: none;
+    color: var(--color-gris-texto);
 }
 
 h3{
     text-align: center;
 }
 
+.elementor-widget-heading, .elementor-heading-title{
+    color: var(--color-blanco-fondo);
+}
 
+
+.texto-hover-blanco {
+    color: transparent;
+    transition: color 0.3s ease;
+  }
+  
+  .texto-hover-blanco h3:hover {
+    color: white;
+  }
+  
 
 /* musica y meditaciones mostrar del short code */
 .musica-cards-container,
@@ -203,7 +236,7 @@ h3{
 
 .musica-card,
 .meditacion-card {
-    background: #f9f9f9;
+    background: var(--color-verde);
     border-radius: 8px;
     padding: 20px;
     width: 250px;
@@ -219,19 +252,32 @@ h3{
 .musica-card h4,
 .meditacion-card h4 {
     font-size: 18px;
+    margin: 20px;
+    text-align: center;
     color: #333;
+}
+
+.elementor-shortcode h3{
+    margin: 40px;
+    text-transform: uppercase;
+    font-size: 30px;
+    color: var(--color-gris-texto);
 }
 
 .musica-card p,
 .meditacion-card p {
     font-size: 14px;
-    color: #666;
+    color: var(--color-gris-texto);
+    margin-top: 10px;
 }
+
+
 
 .musica-card .btn-escuchar,
 .meditacion-card .btn-escuchar {
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom:20px ;
     padding: 8px 15px;
     background: #9c27b0;
     color: white;
@@ -245,15 +291,18 @@ h3{
     background-color: #7b1fa2;
 }
 
+.musica-card{
+    margin-top: 20px;
+}
+
 /* formulario login-register */
 .alertcalm-form {
     max-width: 400px;
     margin: 2rem auto;
     padding: 2rem;
     border-radius: 16px;
-    background-color: #F3E5F5; /* Morado claro */
+    background-color: var(--color-verde); 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', sans-serif;
 }
 
 .alertcalm-form input {
@@ -281,6 +330,8 @@ h3{
     background-color: var(--color-secundario);
 }
 
+
+
 .alertcalm-mensaje {
     text-align: center;
     font-weight: bold;
@@ -304,6 +355,7 @@ h3{
     color: white;
     transition: color 0.3s ease;
     font-size: 20px;
+    margin-left:10px;
 }
 
 .btn-favorito.favorito i {
@@ -311,7 +363,12 @@ h3{
 }
 
 .btn-favorito{
+    border: 1px solid var(--color-negro);
+    color: var(--color-blanco-fondo);
+    padding: 0;
+    background: none;
     border: none;
+    cursor: pointer;
 }
 
 /* politica privacidad */
