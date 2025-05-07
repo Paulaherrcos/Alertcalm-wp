@@ -7,6 +7,219 @@
  */
 
 
+ //FUNCIÓN PARA QUE APAREZCA EL PLUGIN UNA VEZ SE ACTIVE EN LA PARTE DEL BACKEND
+
+ add_action('admin_menu', 'alertcalm_crud_menu');
+
+function alertcalm_crud_menu() {
+    //para qeu aparezca el menu princiapl en mi wordpress 
+    add_menu_page(
+        'AlertCalm CRUD',
+        'AlertCalm CRUD',
+        'manage_options',
+        'alertcalm_crud',
+        'alertcalm_crud__todos_panel',
+        'dashicons-heart',
+        6
+    );
+        
+    // Submenús
+    add_submenu_page(
+        'alertcalm_crud',
+        'Ver todos',
+        'Ver todos',
+        'manage_options',
+        'alertcalm_crud_todos',
+        'alertcalm_crud_todos_panel'
+    );
+
+    add_submenu_page(
+        'alertcalm_crud',
+        'Crear',
+        'Crear',
+        'manage_options',
+        'alertcalm_crud_crear',
+        'alertcalm_crud_crear'
+    );
+
+    add_submenu_page(
+        'alertcalm_crud',
+        'Editar',
+        'Editar',
+        'manage_options',
+        'alertcalm_crud_editar',
+        'alertcalm_crud_editar'
+    );
+
+    add_submenu_page(
+        'alertcalm_crud',
+        'Eliminar',
+        'Eliminar',
+        'manage_options',
+        'alertcalm_crud_eliminar',
+        'alertcalm_crud_eliminar'
+    );
+}
+
+function alertcalm_crud_panel(){
+    echo "Bienvenido";
+}
+
+//función que muestra las músicas y meditaciones guardadas en la bd
+function alertcalm_crud_todos_panel() {
+    $musicas = listar_musicas_con_filtro(); // Reutilizas tu función de datos
+
+    echo '<h1>Listado de músicas</h1>';
+    
+    if ( empty($musicas) ) {
+        echo '<p>No hay músicas registradas.</p>';
+    } else {
+        echo '<ul>';
+        foreach ( $musicas as $musica ) {
+            echo '<li>' . esc_html($musica->titulo) . ' (' . esc_html($musica->categoria) . ')</li>';
+        }
+        echo '</ul>';
+    }
+
+
+    echo '<h1>Listado de meditaciones</h1>';
+
+    $meditaciones = listar_meditaciones_con_filtro(); 
+
+    if( empty($meditaciones)){
+        echo '<p>No hay meditaciones registradas.</p>';
+    }else{
+        echo '<ul>';
+        foreach($meditaciones as $meditacion){
+            echo '<li>' . esc_html($meditacion->titulo) . ' (' . esc_html($meditacion->categoria) . ')</li>';
+        echo '</ul>';
+        }
+    }
+}
+
+
+
+function alertcalm_crud_crear() {
+    echo <<<HTML
+    <h1>Elija el tipo de contenido que desee crear:</h1>
+    <select name="tipo_crear" id="tipo_crear">
+        <option value="musica">Música</option>
+        <option value="meditacion">Meditación</option>
+    </select>
+
+        <div id="formulario_musica" style="display: block; margin-top: 20px;">
+            <form action="" method="POST">
+                <input type="text" name="titulo" placeholder="Título de la música">
+                <input type="text" name="categoria" placeholder="categoría">
+                <input type="text" name="file_url" placeholder="file_url">
+                <input type="text" name="duracion" placeholder="duración">
+                <input type="text" name="lenguaje" placeholder="lenguaje">
+                <input type="text" name="imagen_url" placeholder="imagen_url">
+                <input type="submit" value="Crear música">
+            </form>
+        </div>
+
+        <div id="formulario_meditacion" style="display: none; margin-top: 20px;">
+            <form action="" method="POST">
+                <input type="text" name="titulo" placeholder="Título de la meditación">
+                <input type="text" name="categoria" placeholder="categoría">
+                <input type="text" name="file_url" placeholder="file_url">
+                <input type="text" name="duracion" placeholder="duración">
+                <input type="text" name="lenguaje" placeholder="lenguaje">
+                <input type="text" name="imagen_url" placeholder="imagen_url">
+                <input type="submit" value="Crear meditación">
+            </form>
+        </div>
+    HTML;
+}
+
+//vincular con el js
+
+function alertcalm_crud_enqueue_scripts($hook) {
+    if ($hook !== 'alertcalm-crud_page_alertcalm_crud_crear') return;
+    wp_enqueue_script('formulario-crear-js', plugin_dir_url(__FILE__) . 'js/formularios_crear.js', [], false, true);
+}
+add_action('admin_enqueue_scripts', 'alertcalm_crud_enqueue_scripts');
+
+
+
+
+function alertcalm_crud_eliminar() {
+    echo '<h1>Selecciona lo que deseas eliminar</h1> <br>';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id']) && $_POST['tipo'] === 'musica') {
+        // Validar que eliminar_musica exista
+        if (function_exists('eliminar_musica')) {
+            //intval() hace que se cnvierta lo que se le pasa a un número entero (int)
+            eliminar_musica(['id' => intval($_POST['eliminar_id'])]);
+            echo '<div style="color: green;">Música eliminada con éxito.</div>';
+        } else {
+            echo '<div style="color: red;">Error: función eliminar_musica no definida.</div>';
+        }
+    }
+
+    echo '
+    <form action="" method="POST">
+        <select name="tipo" id="tipo">
+            <option value="musica">Música</option>
+            <option value="meditacion">Meditación</option>
+        </select>
+        <input type="text" name="eliminar_id" placeholder="ID">
+        <button type="submit">Buscar</button>
+    </form> ';
+
+    if (function_exists('listar_musicas_con_filtro')) {
+        $musicas = listar_musicas_con_filtro();
+        echo '
+        <table border="1" cellpadding="5px">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Categoría</th>
+                    <th>ID</th>
+                    <th>Duración</th>
+                    <th>Lenguaje</th>
+                    <th>Imagen</th>
+                    <th>File</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+        foreach ($musicas as $musica) {
+            echo "
+            <tr>
+                <td>{$musica->titulo}</td>
+                <td>{$musica->categoria}</td>
+                <td>{$musica->id}</td>
+                <td>{$musica->duracion}</td>
+                <td>{$musica->lenguaje}</td>
+                <td><img src='{$musica->imagen_url}' alt='Imagen de {$musica->titulo}' width='100px'></td>
+                <td>{$musica->file_url}</td>
+                <td>
+                    <form action='' method='POST'>
+                        <input type='hidden' name='eliminar_id' value='{$musica->id}'>
+                        <input type='hidden' name='tipo' value='musica'>
+                        <button type='submit'>Eliminar</button>
+                    </form>
+                </td>
+            </tr>";
+        }
+
+        echo '</tbody></table>';
+    } else {
+        echo '<div style="color: red;">Error: función listar_musicas_con_filtro no definida.</div>';
+    }
+}
+
+
+function alertcalm_crud_editar(){
+    echo '<h1>EDITAR</h1>';
+}
+
+
+
+//prefix: devuelve el prefijo actual de la base de datos (wp_)
 function crear_tabla_musica_y_meditaciones() {
     global $wpdb;
     $tabla_musica = $wpdb->prefix . 'musica';
@@ -47,12 +260,14 @@ function crear_tabla_musica_y_meditaciones() {
 
 
     // Incluye el archivo necesario para ejecutar dbDelta()
+    //es una función de wordpress que crea la bd si no existe y si ya está creada la actualliza
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta( $sql_musica );
     dbDelta( $sql_meditaciones);
     dbDelta( $sql_favoritos);
 }
 // Agregar la acción para crear la tabla de musica al activar el plugin
+//Una vez activo el plugin alertcalm-crud se ejecuta la function crear_tabla_musica_y_meditaciones, si no activo el plugin no
 register_activation_hook( __FILE__, 'crear_tabla_musica_y_meditaciones' );
 
 // Función para obtener una música por ID
@@ -97,12 +312,16 @@ function listar_musicas_con_filtro( $categorias = '' ) {
 
 
 // Función para listar todas las meditaciones
-function listar_meditaciones_con_filtro( $categoria = '' ) {
+function listar_meditaciones_con_filtro( $categorias = '' ) {
     global $wpdb;
     $tabla_meditaciones = $wpdb->prefix . 'meditaciones';
     $sql = "SELECT * FROM $tabla_meditaciones";
-    if ( ! empty( $categoria ) ) {
-        $sql .= $wpdb->prepare( " WHERE categoria = %s", $categoria );
+    if ( ! empty( $categorias ) ) { $categorias_array = array_map('trim', explode(',', $categorias));
+
+        // Prepara placeholders para la consulta
+        $placeholders = implode(',', array_fill(0, count($categorias_array), '%s'));
+
+        $sql .= $wpdb->prepare( " WHERE categoria IN ($placeholders)", ...$categorias_array );
     }
     return $wpdb->get_results( $sql );
 }
@@ -344,7 +563,7 @@ function shortcode_listar_meditaciones( $atts ) {
                 <p><strong>Duración:</strong> {$meditacion->duracion}</p>
                 <p><strong>Lenguaje:</strong> {$meditacion->lenguaje}</p>
                 <a href='{$meditacion->file_url}' target='_blank' class='btn-escuchar'>Escuchar</a>
-                <button class='btn-favorito' data-elemento-id='{$musica->id}' data-tipo='musica'>
+                <button class='btn-favorito' data-elemento-id='{$meditacion->id}' data-tipo='meditacion'>
                     <i class='fas fa-heart'></i>
                 </button>
             </div>
