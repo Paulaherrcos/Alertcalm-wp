@@ -2,3 +2,108 @@
 [07-May-2025 12:43:16 UTC] Hook actual: about.php
 [07-May-2025 12:43:21 UTC] Hook actual: alertcalm-crud_page_alertcalm_crud_crear
 [07-May-2025 12:51:24 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[08-May-2025 07:25:17 UTC] Automatic updates starting...
+[08-May-2025 07:25:20 UTC]   Automatic plugin updates starting...
+[08-May-2025 07:25:20 UTC]   Automatic plugin updates complete.
+[08-May-2025 07:25:24 UTC] Automatic updates complete.
+[08-May-2025 07:48:48 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function crear_musica(), 0 passed in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 136 and exactly 1 expected in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php:334
+Stack trace:
+#0 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php(136): crear_musica()
+#1 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(324): alertcalm_crud_crear('')
+#2 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#3 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#4 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-admin\admin.php(260): do_action('alertcalm-crud_...')
+#5 {main}
+  thrown in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 334
+[08-May-2025 07:49:03 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function crear_musica(), 0 passed in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 136 and exactly 1 expected in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php:334
+Stack trace:
+#0 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php(136): crear_musica()
+#1 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(324): alertcalm_crud_crear('')
+#2 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#3 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#4 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-admin\admin.php(260): do_action('alertcalm-crud_...')
+#5 {main}
+  thrown in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 334
+[08-May-2025 07:51:57 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function crear_musica(), 0 passed in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 136 and exactly 1 expected in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php:336
+Stack trace:
+#0 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php(136): crear_musica()
+#1 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(324): alertcalm_crud_crear('')
+#2 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#3 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#4 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-admin\admin.php(260): do_action('alertcalm-crud_...')
+#5 {main}
+  thrown in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 336
+[08-May-2025 07:52:06 UTC] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function crear_musica(), 0 passed in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 136 and exactly 1 expected in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php:336
+Stack trace:
+#0 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php(136): crear_musica()
+#1 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(324): alertcalm_crud_crear('')
+#2 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#3 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#4 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-admin\admin.php(260): do_action('alertcalm-crud_...')
+#5 {main}
+  thrown in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 336
+[09-May-2025 11:54:05 UTC] Automatic updates starting...
+[09-May-2025 11:54:09 UTC]   Automatic plugin updates starting...
+[09-May-2025 11:54:09 UTC]   Automatic plugin updates complete.
+[09-May-2025 11:54:12 UTC] Automatic updates complete.
+[14-May-2025 12:19:05 UTC] Automatic updates starting...
+[14-May-2025 12:19:08 UTC]   Automatic plugin updates starting...
+[14-May-2025 12:19:08 UTC]   Automatic plugin updates complete.
+[14-May-2025 12:19:12 UTC] Automatic updates complete.
+[14-May-2025 12:46:46 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 12:47:43 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 12:48:14 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 12:49:15 UTC] PHP Notice:  La función register_rest_route ha sido llamada <strong>de forma incorrecta</strong>. A la definición de ruta de la API REST para <code>musica_meditaciones/v1/musica/(?P\d+)</code> le falta el argumento <code>permission_callback</code> necesario. Para las rutas de la API REST que están pensadas para a ser públicas, usa <code>__return_true</code> como la llamada de permiso. Por favor, ve <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">depuración en WordPress</a> para más información. (Este mensaje fue añadido en la versión 5.5.0). in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\functions.php on line 6121
+[14-May-2025 12:49:15 UTC] PHP Notice:  La función register_rest_route ha sido llamada <strong>de forma incorrecta</strong>. A la definición de ruta de la API REST para <code>musica_meditaciones/v1/musica</code> le falta el argumento <code>permission_callback</code> necesario. Para las rutas de la API REST que están pensadas para a ser públicas, usa <code>__return_true</code> como la llamada de permiso. Por favor, ve <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">depuración en WordPress</a> para más información. (Este mensaje fue añadido en la versión 5.5.0). in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\functions.php on line 6121
+[14-May-2025 12:49:15 UTC] PHP Notice:  La función register_rest_route ha sido llamada <strong>de forma incorrecta</strong>. A la definición de ruta de la API REST para <code>musica_meditaciones/v1/musica/(?P\d+)</code> le falta el argumento <code>permission_callback</code> necesario. Para las rutas de la API REST que están pensadas para a ser públicas, usa <code>__return_true</code> como la llamada de permiso. Por favor, ve <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">depuración en WordPress</a> para más información. (Este mensaje fue añadido en la versión 5.5.0). in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\functions.php on line 6121
+[14-May-2025 12:49:15 UTC] PHP Notice:  La función register_rest_route ha sido llamada <strong>de forma incorrecta</strong>. A la definición de ruta de la API REST para <code>musica_meditaciones/v1/musica/(?P\d+)</code> le falta el argumento <code>permission_callback</code> necesario. Para las rutas de la API REST que están pensadas para a ser públicas, usa <code>__return_true</code> como la llamada de permiso. Por favor, ve <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">depuración en WordPress</a> para más información. (Este mensaje fue añadido en la versión 5.5.0). in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\functions.php on line 6121
+[14-May-2025 12:49:15 UTC] PHP Notice:  La función register_rest_route ha sido llamada <strong>de forma incorrecta</strong>. A la definición de ruta de la API REST para <code>musica_meditaciones/v1/meditacion/(?P\d+)</code> le falta el argumento <code>permission_callback</code> necesario. Para las rutas de la API REST que están pensadas para a ser públicas, usa <code>__return_true</code> como la llamada de permiso. Por favor, ve <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">depuración en WordPress</a> para más información. (Este mensaje fue añadido en la versión 5.5.0). in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\functions.php on line 6121
+[14-May-2025 12:49:15 UTC] PHP Notice:  La función register_rest_route ha sido llamada <strong>de forma incorrecta</strong>. A la definición de ruta de la API REST para <code>musica_meditaciones/v1/meditacion</code> le falta el argumento <code>permission_callback</code> necesario. Para las rutas de la API REST que están pensadas para a ser públicas, usa <code>__return_true</code> como la llamada de permiso. Por favor, ve <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">depuración en WordPress</a> para más información. (Este mensaje fue añadido en la versión 5.5.0). in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\functions.php on line 6121
+[14-May-2025 12:49:15 UTC] PHP Notice:  La función register_rest_route ha sido llamada <strong>de forma incorrecta</strong>. A la definición de ruta de la API REST para <code>musica_meditaciones/v1/meditacion/(?P\d+)</code> le falta el argumento <code>permission_callback</code> necesario. Para las rutas de la API REST que están pensadas para a ser públicas, usa <code>__return_true</code> como la llamada de permiso. Por favor, ve <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">depuración en WordPress</a> para más información. (Este mensaje fue añadido en la versión 5.5.0). in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\functions.php on line 6121
+[14-May-2025 12:49:15 UTC] PHP Notice:  La función register_rest_route ha sido llamada <strong>de forma incorrecta</strong>. A la definición de ruta de la API REST para <code>musica_meditaciones/v1/meditacion/(?P\d+)</code> le falta el argumento <code>permission_callback</code> necesario. Para las rutas de la API REST que están pensadas para a ser públicas, usa <code>__return_true</code> como la llamada de permiso. Por favor, ve <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">depuración en WordPress</a> para más información. (Este mensaje fue añadido en la versión 5.5.0). in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\functions.php on line 6121
+[14-May-2025 12:49:15 UTC] PHP Notice:  La función register_rest_route ha sido llamada <strong>de forma incorrecta</strong>. A la definición de ruta de la API REST para <code>musica_meditaciones/v1/musicas</code> le falta el argumento <code>permission_callback</code> necesario. Para las rutas de la API REST que están pensadas para a ser públicas, usa <code>__return_true</code> como la llamada de permiso. Por favor, ve <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">depuración en WordPress</a> para más información. (Este mensaje fue añadido en la versión 5.5.0). in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\functions.php on line 6121
+[14-May-2025 12:49:15 UTC] PHP Notice:  La función register_rest_route ha sido llamada <strong>de forma incorrecta</strong>. A la definición de ruta de la API REST para <code>musica_meditaciones/v1/meditaciones</code> le falta el argumento <code>permission_callback</code> necesario. Para las rutas de la API REST que están pensadas para a ser públicas, usa <code>__return_true</code> como la llamada de permiso. Por favor, ve <a href="https://developer.wordpress.org/advanced-administration/debug/debug-wordpress/">depuración en WordPress</a> para más información. (Este mensaje fue añadido en la versión 5.5.0). in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\functions.php on line 6121
+[14-May-2025 12:49:15 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 12:49:15 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 12:49:33 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 12:49:41 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 12:54:30 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 12:54:35 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 12:54:56 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 12:56:21 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 13:00:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function crear_contenido_desde_formulario() in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php:124
+Stack trace:
+#0 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(324): alertcalm_crud_crear('')
+#1 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#2 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#3 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-admin\admin.php(260): do_action('alertcalm-crud_...')
+#4 {main}
+  thrown in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 124
+[14-May-2025 13:01:28 UTC] WordPress database error Table 'alertcalm_wp.wp_meditacion' doesn't exist for query SHOW FULL COLUMNS FROM `wp_meditacion` made by do_action('alertcalm-crud_page_alertcalm_crud_crear'), WP_Hook->do_action, WP_Hook->apply_filters, alertcalm_crud_crear, crear_contenido_desde_formulario
+[14-May-2025 13:01:33 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 13:02:06 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 13:02:37 UTC] WordPress database error Table 'alertcalm_wp.wp_meditacion' doesn't exist for query SHOW FULL COLUMNS FROM `wp_meditacion` made by do_action('alertcalm-crud_page_alertcalm_crud_crear'), WP_Hook->do_action, WP_Hook->apply_filters, alertcalm_crud_crear, crear_contenido_desde_formulario
+[14-May-2025 13:02:41 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 13:05:27 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 13:05:59 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 13:16:03 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 13:16:21 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 13:33:09 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 13:35:26 UTC] PHP Parse error:  syntax error, unexpected token "<" in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 239
+[14-May-2025 13:35:27 UTC] PHP Parse error:  syntax error, unexpected token "<" in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-content\plugins\alertcalm-crud\alertcalm-crud.php on line 239
+[14-May-2025 13:36:02 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir
+[14-May-2025 13:49:53 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, function "alertcalm_crud__todos_panel" not found or invalid function name in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php:324
+Stack trace:
+#0 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#1 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#2 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-admin\admin.php(260): do_action('toplevel_page_a...')
+#3 {main}
+  thrown in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php on line 324
+[14-May-2025 13:49:58 UTC] PHP Fatal error:  Uncaught TypeError: call_user_func_array(): Argument #1 ($callback) must be a valid callback, function "alertcalm_crud__todos_panel" not found or invalid function name in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php:324
+Stack trace:
+#0 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#1 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\plugin.php(517): WP_Hook->do_action(Array)
+#2 C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-admin\admin.php(260): do_action('toplevel_page_a...')
+#3 {main}
+  thrown in C:\xampp\htdocs\alertcalm\alertcalm-wp-bueno\wp-includes\class-wp-hook.php on line 324
+[14-May-2025 13:55:55 UTC] Categoria en Shortcode Musicas: música,relajación, activación,dormir

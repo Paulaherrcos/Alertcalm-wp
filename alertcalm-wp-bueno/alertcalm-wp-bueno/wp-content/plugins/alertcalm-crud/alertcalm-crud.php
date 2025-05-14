@@ -67,71 +67,165 @@ function alertcalm_crud_panel(){
 
 //función que muestra las músicas y meditaciones guardadas en la bd
 function alertcalm_crud_todos_panel() {
-    $musicas = listar_musicas_con_filtro(); // Reutilizas tu función de datos
+    $musicas = listar_musicas_con_filtro();
 
     echo '<h1>Listado de músicas</h1>';
-    
-    if ( empty($musicas) ) {
+
+    if (empty($musicas)) {
         echo '<p>No hay músicas registradas.</p>';
     } else {
-        echo '<ul>';
-        foreach ( $musicas as $musica ) {
-            echo '<li>' . esc_html($musica->titulo) . ' (' . esc_html($musica->categoria) . ')</li>';
+        echo '<table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoría</th>
+                        <th>Duración</th>
+                        <th>Lenguaje</th>
+                        <th>Imagen</th>
+                        <th>Archivo</th>
+                    </tr>
+                </thead>
+                <tbody>';
+        foreach ($musicas as $musica) {
+            echo '<tr>
+                    <td>' . esc_html($musica->titulo) . '</td>
+                    <td>' . esc_html($musica->categoria) . '</td>
+                    <td>' . esc_html($musica->duracion) . '</td>
+                    <td>' . esc_html($musica->lenguaje) . '</td>
+                    <td><img src="' . esc_url($musica->imagen_url) . '" alt="Imagen" width="100"></td>
+                    <td><a href="' . esc_url($musica->file_url) . '" target="_blank">Ver archivo</a></td>
+                  </tr>';
         }
-        echo '</ul>';
+        echo '</tbody></table>';
     }
-
 
     echo '<h1>Listado de meditaciones</h1>';
 
-    $meditaciones = listar_meditaciones_con_filtro(); 
+    $meditaciones = listar_meditaciones_con_filtro();
 
-    if( empty($meditaciones)){
+    if (empty($meditaciones)) {
         echo '<p>No hay meditaciones registradas.</p>';
-    }else{
-        echo '<ul>';
-        foreach($meditaciones as $meditacion){
-            echo '<li>' . esc_html($meditacion->titulo) . ' (' . esc_html($meditacion->categoria) . ')</li>';
-        echo '</ul>';
+    } else {
+        echo '<table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoría</th>
+                        <th>Duración</th>
+                        <th>Lenguaje</th>
+                        <th>Imagen</th>
+                        <th>Archivo</th>
+                    </tr>
+                </thead>
+                <tbody>';
+        foreach ($meditaciones as $meditacion) {
+            echo '<tr>
+                    <td>' . esc_html($meditacion->titulo) . '</td>
+                    <td>' . esc_html($meditacion->categoria) . '</td>
+                    <td>' . esc_html($meditacion->duracion) . '</td>
+                    <td>' . esc_html($meditacion->lenguaje) . '</td>
+                    <td><img src="' . esc_url($meditacion->imagen_url) . '" alt="Imagen" width="100"></td>
+                    <td><a href="' . esc_url($meditacion->file_url) . '" target="_blank">Ver archivo</a></td>
+                  </tr>';
         }
+        echo '</tbody></table>';
     }
 }
 
 
 
+
 function alertcalm_crud_crear() {
+    $mensaje = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $titulo = $_POST['titulo'] ?? '';
+        $categoria = $_POST['categoria'] ?? '';
+        $tipo = $_POST['tipo'] ?? '';
+        $file_url = $_POST['file_url'] ?? '';
+        $duracion = $_POST['duracion'] ?? '';
+        $lenguaje = $_POST['lenguaje'] ?? '';
+        $imagen_url = $_POST['imagen_url'] ?? '';
+
+        if ($titulo && $categoria && $file_url && $duracion && $lenguaje && $imagen_url && $tipo) {
+            $datos = [
+                'titulo' => $titulo,
+                'categoria' => $categoria,
+                'file_url' => $file_url,
+                'duracion' => $duracion,
+                'lenguaje' => $lenguaje,
+                'imagen_url' => $imagen_url,
+                'tipo' => $tipo,
+            ];
+            crear_contenido_desde_formulario($datos); // función que decides abajo
+            $mensaje = '<p style="color: green;">¡Contenido creado con éxito!</p>';
+        } else {
+            $mensaje = '<p style="color: red;">Faltan campos por rellenar.</p>';
+        }
+    }
+
     echo <<<HTML
     <h1>Elija el tipo de contenido que desee crear:</h1>
+    $mensaje
     <select name="tipo_crear" id="tipo_crear">
         <option value="musica">Música</option>
         <option value="meditacion">Meditación</option>
     </select>
 
-        <div id="formulario_musica" style="display: block; margin-top: 20px;">
-            <form action="" method="POST">
-                <input type="text" name="titulo" placeholder="Título de la música">
-                <input type="text" name="categoria" placeholder="categoría">
-                <input type="text" name="file_url" placeholder="file_url">
-                <input type="text" name="duracion" placeholder="duración">
-                <input type="text" name="lenguaje" placeholder="lenguaje">
-                <input type="text" name="imagen_url" placeholder="imagen_url">
-                <input type="submit" value="Crear música">
-            </form>
-        </div>
+    <div id="formulario_musica" style="display: block; margin-top: 20px;">
+        <form action="" method="POST">
+            <input type="hidden" name="tipo" value="musica">
+            <input type="text" name="titulo" placeholder="Título de la música">
+            <select name="categoria">
+                <option value="relajación">Relajación</option>
+                <option value="activación">Activación</option>
+                <option value="dormir">Dormir</option>
+            </select>
+            <input type="text" name="file_url" placeholder="file_url">
+            <input type="text" name="duracion" placeholder="duración">
+            <input type="text" name="lenguaje" placeholder="lenguaje">
+            <input type="text" name="imagen_url" placeholder="imagen_url">
+            <input type="submit" value="Crear música">
+        </form>
+    </div>
 
-        <div id="formulario_meditacion" style="display: none; margin-top: 20px;">
-            <form action="" method="POST">
-                <input type="text" name="titulo" placeholder="Título de la meditación">
-                <input type="text" name="categoria" placeholder="categoría">
-                <input type="text" name="file_url" placeholder="file_url">
-                <input type="text" name="duracion" placeholder="duración">
-                <input type="text" name="lenguaje" placeholder="lenguaje">
-                <input type="text" name="imagen_url" placeholder="imagen_url">
-                <input type="submit" value="Crear meditación">
-            </form>
-        </div>
+    <div id="formulario_meditacion" style="display: none; margin-top: 20px;">
+        <form action="" method="POST">
+            <input type="hidden" name="tipo" value="meditacion">
+            <input type="text" name="titulo" placeholder="Título de la meditación">
+            <select name="categoria">
+                <option value="relajación">Relajación</option>
+                <option value="activación">Activación</option>
+                <option value="dormir">Dormir</option>
+            </select>
+            <input type="text" name="file_url" placeholder="file_url">
+            <input type="text" name="duracion" placeholder="duración">
+            <input type="text" name="lenguaje" placeholder="lenguaje">
+            <input type="text" name="imagen_url" placeholder="imagen_url">
+            <input type="submit" value="Crear meditación">
+        </form>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const selector = document.getElementById('tipo_crear');
+        const formularioMusica = document.getElementById('formulario_musica');
+        const formularioMeditacion = document.getElementById('formulario_meditacion');
+
+        selector.addEventListener('change', function() {
+            if (this.value === 'musica') {
+                formularioMusica.style.display = 'block';
+                formularioMeditacion.style.display = 'none';
+            } else {
+                formularioMusica.style.display = 'none';
+                formularioMeditacion.style.display = 'block';
+            }
+        });
+    });
+    </script>
     HTML;
 }
+
 
 //vincular con el js
 
@@ -145,72 +239,93 @@ add_action('admin_enqueue_scripts', 'alertcalm_crud_enqueue_scripts');
 
 
 function alertcalm_crud_eliminar() {
-    echo '<h1>Selecciona lo que deseas eliminar</h1> <br>';
+    echo '<h1>Selecciona lo que deseas eliminar</h1><br>';
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id']) && $_POST['tipo'] === 'musica') {
-        // Validar que eliminar_musica exista
-        if (function_exists('eliminar_musica')) {
-            //intval() hace que se cnvierta lo que se le pasa a un número entero (int)
+    $tipo = $_POST['tipo'] ?? 'musica';
+    $filtro_categoria = $_POST['filtro_categoria'] ?? '';
+    $filtro_titulo = $_POST['filtro_titulo'] ?? '';
+
+    // Eliminar si se ha enviado
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id']) && isset($_POST['tipo'])) {
+        if ($_POST['tipo'] === 'musica' && function_exists('eliminar_musica')) {
             eliminar_musica(['id' => intval($_POST['eliminar_id'])]);
             echo '<div style="color: green;">Música eliminada con éxito.</div>';
-        } else {
-            echo '<div style="color: red;">Error: función eliminar_musica no definida.</div>';
+        } elseif ($_POST['tipo'] === 'meditacion' && function_exists('eliminar_meditacion')) {
+            eliminar_meditacion(['id' => intval($_POST['eliminar_id'])]);
+            echo '<div style="color: green;">Meditación eliminada con éxito.</div>';
         }
     }
 
+    // Formulario de filtros
     echo '
     <form action="" method="POST">
-        <select name="tipo" id="tipo">
-            <option value="musica">Música</option>
-            <option value="meditacion">Meditación</option>
+        <select name="tipo" onchange="this.form.submit()">
+            <option value="musica" ' . ($tipo === 'musica' ? 'selected' : '') . '>Música</option>
+            <option value="meditacion" ' . ($tipo === 'meditacion' ? 'selected' : '') . '>Meditación</option>
         </select>
-        <input type="text" name="eliminar_id" placeholder="ID">
+        <select name="filtro_categoria">
+            <option value="">-- Todas las categorías --</option>
+            <option value="relajación" ' . ($filtro_categoria === 'relajación' ? 'selected' : '') . '>Relajación</option>
+            <option value="activación" ' . ($filtro_categoria === 'activación' ? 'selected' : '') . '>Activación</option>
+            <option value="dormir" ' . ($filtro_categoria === 'dormir' ? 'selected' : '') . '>Dormir</option>
+        </select>
+        <input type="text" name="filtro_titulo" placeholder="Título" value="' . esc_attr($filtro_titulo) . '">
         <button type="submit">Buscar</button>
-    </form> ';
+    </form>
+    
+    <br>';
 
-    if (function_exists('listar_musicas_con_filtro')) {
-        $musicas = listar_musicas_con_filtro();
-        echo '
-        <table border="1" cellpadding="5px">
-            <thead>
-                <tr>
-                    <th>Título</th>
-                    <th>Categoría</th>
-                    <th>ID</th>
-                    <th>Duración</th>
-                    <th>Lenguaje</th>
-                    <th>Imagen</th>
-                    <th>File</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>';
-
-        foreach ($musicas as $musica) {
-            echo "
-            <tr>
-                <td>{$musica->titulo}</td>
-                <td>{$musica->categoria}</td>
-                <td>{$musica->id}</td>
-                <td>{$musica->duracion}</td>
-                <td>{$musica->lenguaje}</td>
-                <td><img src='{$musica->imagen_url}' alt='Imagen de {$musica->titulo}' width='100px'></td>
-                <td>{$musica->file_url}</td>
-                <td>
-                    <form action='' method='POST'>
-                        <input type='hidden' name='eliminar_id' value='{$musica->id}'>
-                        <input type='hidden' name='tipo' value='musica'>
-                        <button type='submit'>Eliminar</button>
-                    </form>
-                </td>
-            </tr>";
-        }
-
-        echo '</tbody></table>';
+    // Obtener los datos según el tipo
+    if ($tipo === 'musica' && function_exists('listar_musicas_con_filtro')) {
+        $items = listar_musicas_con_filtro($filtro_categoria, $filtro_titulo);
+    } elseif ($tipo === 'meditacion' && function_exists('listar_meditaciones_con_filtro')) {
+        $items = listar_meditaciones_con_filtro($filtro_categoria, $filtro_titulo);
     } else {
-        echo '<div style="color: red;">Error: función listar_musicas_con_filtro no definida.</div>';
+        echo '<div style="color: red;">No se puede mostrar la lista.</div>';
+        return;
     }
+
+    // Tabla
+    echo '
+    <table border="1" cellpadding="5px">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Categoría</th>
+                <th>ID</th>
+                <th>Duración</th>
+                <th>Lenguaje</th>
+                <th>Imagen</th>
+                <th>File</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+    foreach ($items as $item) {
+        echo "
+        <tr>
+            <td>{$item->titulo}</td>
+            <td>{$item->categoria}</td>
+            <td>{$item->id}</td>
+            <td>{$item->duracion}</td>
+            <td>{$item->lenguaje}</td>
+            <td><img src='{$item->imagen_url}' width='100px'></td>
+            <td>{$item->file_url}</td>
+            <td>
+                <form action='' method='POST'>
+                    <input type='hidden' name='eliminar_id' value='{$item->id}'>
+                    <input type='hidden' name='tipo' value='{$tipo}'>
+                    <button type='submit'>Eliminar</button>
+                </form>
+            </td>
+        </tr>";
+    }
+
+    echo '</tbody></table>';
 }
+
+
 
 
 function alertcalm_crud_editar(){
@@ -289,26 +404,35 @@ function obtener_meditacion( $request ) {
 }
 
 // Función para listar todas las músicas con filtro por categorías
-function listar_musicas_con_filtro( $categorias = '' ) {
+function listar_musicas_con_filtro( $categorias = '', $titulo = '' ) {
     global $wpdb;
     $tabla_musica = $wpdb->prefix . 'musica';
 
-    $sql = "SELECT * FROM $tabla_musica";
+    $sql = "SELECT * FROM $tabla_musica WHERE 1=1";
+    $params = [];
 
-    // Si se pasa una categoría, se filtra por ellas
+    // Si se pasa una o más categorías
     if ( ! empty( $categorias ) ) {
-        // Divide las categorías en un array
-        $categorias_array = array_map('trim', explode(',', $categorias));
-
-        // Prepara placeholders para la consulta
-        $placeholders = implode(',', array_fill(0, count($categorias_array), '%s'));
-
-        $sql .= $wpdb->prepare( " WHERE categoria IN ($placeholders)", ...$categorias_array );
+        $categorias_array = array_map( 'trim', explode( ',', $categorias ) );
+        $placeholders = implode( ',', array_fill( 0, count( $categorias_array ), '%s' ) );
+        $sql .= " AND categoria IN ($placeholders)";
+        $params = array_merge( $params, $categorias_array );
     }
 
-    // Ejecuta la consulta y devuelve 
-    return $wpdb->get_results( $sql );
+    // Si se pasa un título
+    if ( ! empty( $titulo ) ) {
+        $sql .= " AND titulo LIKE %s";
+        $params[] = '%' . $wpdb->esc_like( $titulo ) . '%';
+    }
+
+    // Ejecutar la consulta preparada si hay parámetros, si no, ejecutar sin prepare
+    if ( ! empty( $params ) ) {
+        return $wpdb->get_results( $wpdb->prepare( $sql, ...$params ) );
+    } else {
+        return $wpdb->get_results( $sql );
+    }
 }
+
 
 
 // Función para listar todas las meditaciones
@@ -338,8 +462,28 @@ function crear_musica( $request ) {
         'lenguaje' => $request->get_param( 'lenguaje' ),
         'imagen_url' => $request->get_param( 'imagen_url' ),
     );
+
+    //insertamos en la tabla_musica la nueva música
     $wpdb->insert( $tabla_musica, $musica );
+    //se ha autoincrementado el id
     return $wpdb->insert_id;
+}
+
+//para crear desde el formulario no tengo que pasar get_paam ya que eto es para hacerlo desde thunder client
+
+function crear_contenido_desde_formulario($datos) {
+    global $wpdb;
+
+    $tabla = $datos['tipo'] === 'musica' ? $wpdb->prefix . 'musica' : $wpdb->prefix . 'meditaciones';
+
+    $wpdb->insert($tabla, [
+        'titulo' => $datos['titulo'],
+        'categoria' => $datos['categoria'],
+        'file_url' => $datos['file_url'],
+        'duracion' => $datos['duracion'],
+        'lenguaje' => $datos['lenguaje'],
+        'imagen_url' => $datos['imagen_url'],
+    ]);
 }
 
 // Función para crear una meditación
